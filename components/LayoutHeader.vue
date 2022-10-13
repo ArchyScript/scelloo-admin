@@ -7,19 +7,19 @@
     <v-layout class="tab-layout pa-0 justify-space-between align-end">
       <div>
         <v-tabs background-color="transparent">
-          <v-tab @click="filterTableData('all')">
+          <v-tab @click="filterData('all')">
             All
           </v-tab>
 
-          <v-tab @click="filterTableData('paid')">
+          <v-tab @click="filterData('paid')">
             Paid
           </v-tab>
 
-          <v-tab @click="filterTableData('unpaid')">
+          <v-tab @click="filterData('unpaid')">
             Unpaid
           </v-tab>
 
-          <v-tab @click="filterTableData('overdue')">
+          <v-tab @click="filterData('overdue')">
             Overdue
           </v-tab>
         </v-tabs>
@@ -31,7 +31,7 @@
         </span>
 
         <span class="total-amount font-weight-bold mx-1">
-          {{ totalAmount }}
+          {{ totalPayableAmount.toLocaleString() }}
         </span>
 
         <span class="font-weight-normal">
@@ -42,22 +42,28 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script>
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'LayoutHeader',
-  setup() {
-    const totalAmount = ref(32232)
+  data: () => ({}),
 
-    const filterTableData = (type: string) => {
-      console.log(type)
-    }
+  computed: {
+    totalPayableAmount() {
+      return this.$store.getters.getTotalPayableAmount
+    },
+  },
 
-    return {
-      totalAmount,
-      filterTableData,
-    }
+  methods: {
+    async filterData(filter_query_value) {
+      const filterQuery = {
+        type: 'payment_status',
+        value: filter_query_value,
+      }
+
+      await this.$store.dispatch('filterUsers', filterQuery)
+    },
   },
 })
 </script>

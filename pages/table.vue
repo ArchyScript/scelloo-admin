@@ -147,15 +147,7 @@
                     item.userStatus == 'inactive' ? '#6E6893' : '#4A4AFF'
                   "
                 >
-                  <img
-                    :src="
-                      item.userStatus == 'inactive'
-                        ? require('../static/inactive.svg')
-                        : require('../static/Ellipse 2.svg')
-                    "
-                    class="mr-1"
-                    alt=""
-                  />
+                  
                   {{ item.userStatus }}
                 </v-chip>
                 <span class="email">Last login: {{ item.lastLogin }}</span>
@@ -251,7 +243,6 @@
 </template>
 
 <script>
-import axios from '@nuxtjs/axios'
 export default {
   name: 'IndexPage',
   data() {
@@ -366,6 +357,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this.$store.state)
     this.getAllPayments()
   },
 }
