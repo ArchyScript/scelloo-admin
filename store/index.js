@@ -9,7 +9,7 @@ export const getters = {
     let totalPayableAmount = 0
 
     state.allUsersData.forEach((eachUserData) => {
-      if (eachUserData !== 'overdue') {
+      if (eachUserData.paymentStatus !== 'paid') {
         totalPayableAmount += +eachUserData.amountInCents
       }
     })
@@ -25,6 +25,19 @@ export const actions = {
 
     commit('SET_ALL_USERS_DATA', data)
   },
+
+  async updateUserPaymentStatus({ commit }, params) {
+    const { id, paymentStatus } = params
+
+    if (paymentStatus === 'overdue') return
+
+    if (paymentStatus === 'paid')
+      return await this.$axios.$patch(`/mark-unpaid/${id}`)
+
+    if (paymentStatus === 'unpaid')
+      return await this.$axios.$patch(`/mark-paid/${id}`)
+  },
+
   async filterUsers({ commit, state }, filterQuery) {
     const { type, value } = filterQuery
     let data = []
@@ -51,35 +64,21 @@ export const actions = {
       }
     }
 
-    //
-    if (type === 'user_details') {
-      if (value === 'default') {
-        data = state.allUsersData
-      } else if (value === 'first_name') {
-        let stateUsersData = state.allUsersData
-
-        data = stateUsersData.sort((x, y) => {
-          if (x.firstName === y.firstName) return 0
-          return x.firstName > y.firstName ? 1 : -1
-        })
-      }
-    }
-
     commit('SET_FILTERED_USERS', data)
   },
 
-  // async status_changer({ commit }, { type, id }) {
-  //   if (type == "activate") {
-  //     const data = await this.$axios.$patch(`/activate-user/${id}`);
-  //     return data;
-  //   } else if (type == "deactivate") {
-  //     const data = await this.$axios.$patch(`/deactivate-user/${id}`);
-  //     return data;
-  //   } else if (type == "delete") {
-  //     const data = await this.$axios.$delete(`/remove-user/${id}`);
-  //     return data;
-  //   }
-  // },
+  async updateUserStatus({ commit }, updateParams) {
+    const { action, id } = updateParams
+
+    if (action == 'activate')
+      return await this.$axios.$patch(`/activate-user/${id}`)
+
+    if (action == 'deactivate')
+      return await this.$axios.$patch(`/deactivate-user/${id}`)
+
+    if (action == 'delete')
+      return await this.$axios.$delete(`/remove-user/${id}`)
+  },
 }
 
 export const mutations = {
@@ -92,39 +91,36 @@ export const mutations = {
   SET_FILTERED_USERS(state, data) {
     return (state.filteredUsers = data)
   },
-  // mutateFilterType(state, payload) {
-  //   state.filterType = payload;
-  // },
-  // sortFirstName(state) {
-  //   state.allUsersData.sort((x, y) => {
-  //     if (x.firstName === y.firstName) return 0;
-  //     return x.firstName > y.firstName ? 1 : -1;
-  //   });
-  // },
-  // sortLastName(state) {
-  //   state.allUsersData.sort((x, y) => {
-  //     if (x.lastName === y.lastName) return 0;
-  //     return x.lastName > y.lastName ? 1 : -1;
-  //   });
-  // },
-  // sortDueDate(state) {
-  //   state.allUsersData.sort((x, y) => {
-  //       x = new Date(x.paidOn);
-  //       y = new Date(y.paidOn)
-  //       return y - x;
-  //   });
-  // },
-  // sortLogin(state) {
-  //   state.allUsersData.sort((x, y) => {
-  //       x = new Date(x.lastLogin);
-  //       y = new Date(y.lastLogin);
-  //     return y - x;
-  //   });
-  // },
-  // sortDefault(state) {
-  //   state.allUsersData.sort((x, y) => {
-  //     if (x.id === y.id) return 0;
-  //     return x.id > y.id ? 1 : -1;
-  //   });
-  // },
+  SORT_AND_UPDATE_BY_DEFAULT(state) {
+    state.allUsersData.sort((user1Data, user2Data) => {
+      if (user1Data.id === user2Data.id) return 0
+      return user1Data.id > user2Data.id ? 1 : -1
+    })
+  },
+  SORT_AND_UPDATE_BY_FIRST_NAME(state) {
+    state.allUsersData.sort((user1Data, user2Data) => {
+      if (user1Data.firstName === user2Data.firstName) return 0
+      return user1Data.firstName > user2Data.firstName ? 1 : -1
+    })
+  },
+  SORT_AND_UPDATE_BY_LAST_NAME(state) {
+    state.allUsersData.sort((user1Data, user2Data) => {
+      if (user1Data.lastName === user2Data.lastName) return 0
+      return user1Data.lastName > user2Data.lastName ? 1 : -1
+    })
+  },
+  SORT_AND_UPDATE_BY_DUE_DATE(state) {
+    state.allUsersData.sort((user1Data, user2Data) => {
+      user1Data = new Date(user1Data.paidOn)
+      user2Data = new Date(user2Data.paidOn)
+      return user2Data - user1Data
+    })
+  },
+  SORT_AND_UPDATE_BY_LAST_LOGIN(state) {
+    state.allUsersData.sort((user1Data, user2Data) => {
+      user1Data = new Date(user1Data.lastLogin)
+      user2Data = new Date(user2Data.lastLogin)
+      return user2Data - user1Data
+    })
+  },
 }
