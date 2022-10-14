@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <v-main>
+  <v-app class="scellooLight black">
+    <v-main class="scellooLight">
       <v-container class="my-10">
         <LayoutHeaderVue />
 
@@ -20,16 +20,7 @@ export default defineComponent({
     LayoutHeaderVue,
   },
   setup() {
-    const totalAmount = ref(32232)
-
-    const filterTableData = (type: string) => {
-      console.log(type)
-    }
-
-    return {
-      totalAmount,
-      filterTableData,
-    }
+    return {}
   },
 })
 </script>

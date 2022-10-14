@@ -10,6 +10,8 @@ import {
   scellooPrimary,
   scellooRed,
   scelloo,
+  scellooLight2,
+  scellooBlue,
 } from './vuetify.options.ts'
 
 export default {
@@ -64,10 +66,11 @@ export default {
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
+    treeShake: true,
     theme: {
       dark: false,
       themes: {
-        dark: {
+        light: {
           scellooDark,
           scellooDarkGrey,
           scellooGrey,
@@ -79,6 +82,8 @@ export default {
           scellooPrimary,
           scellooRed,
           scelloo,
+          scellooLight2,
+          scellooBlue,
         },
       },
     },

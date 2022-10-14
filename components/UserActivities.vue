@@ -3,21 +3,20 @@
     <v-data-table
       :headers="headers"
       :items="userActivities"
+      class="pa-4 font-weight-medium scellooLight scellooDark--text"
       hide-default-footer
-      color="#F4F2FF"
-      class="pa-4"
     >
       <template v-slot:item.date="{ item }">
-        <v-layout column class="py-3" style="width: 100%;">
-          <span class="font-weight-bold">
+        <v-layout column class="py-2">
+          <span class="font-weight-medium">
             {{ item.date }}
           </span>
         </v-layout>
       </template>
 
       <template v-slot:item.userActivity="{ item }">
-        <v-layout align-start column>
-          <span>
+        <v-layout align-center class="py-2">
+          <span class="font-weight-medium">
             {{ item.userActivity }}
           </span>
         </v-layout>
@@ -25,7 +24,7 @@
 
       <template v-slot:item.details="{ item }">
         <v-layout align-start column colspan="4">
-          <span class="paid">
+          <span class="font-weight-medium">
             {{ item.details }}
           </span>
         </v-layout>
@@ -49,15 +48,32 @@ export default defineComponent({
   },
   setup() {
     const headers = ref([
-      { text: 'DATE', sortable: false, value: 'date' },
-      { text: 'USER ACTIVITY', value: 'userActivity', sortable: false },
-      { text: 'DETAILS', value: 'details', sortable: false },
+      {
+        text: 'DATE',
+        align: 'right',
+        sortable: false,
+        value: 'date',
+        class: 'text-body-2 font-weight-medium scellooDarkGrey--text',
+      },
+      {
+        text: 'USER ACTIVITY',
+        value: 'userActivity',
+        sortable: false,
+        class: 'text-body-2 font-weight-medium scellooDarkGrey--text',
+      },
+      {
+        text: 'DETAILS',
+        value: 'details',
+        sortable: false,
+        class: 'text-body-2 font-weight-medium scellooDarkGrey--text',
+      },
     ])
 
     return {
       headers,
     }
   },
- 
 })
 </script>
+
+<style scoped></style>

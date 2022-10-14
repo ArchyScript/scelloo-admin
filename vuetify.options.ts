@@ -1,30 +1,13 @@
-export const scellooPrimary: any = {
-  base: '#6D5BD0',
-}
-export const scellooGreen: any = {
-  base: '#007F00',
-}
-export const scellooRed: any = {
-  base: '#D30000',
-}
-export const scellooDark: any = {
-  base: '#25213B',
-}
-export const scellooDarkGrey: any = {
-  base: '#6E6893',
-}
-export const scellooGrey: any = {
-  base: '#8B83BA',
-}
-export const scellooGrey1: any = {
-  base: '#8E5E5E5',
-}
-export const scellooGrey2: any = {
-  base: '#D9D5EC',
-}
-export const scellooLightGrey: any = {
-  base: '#C6C2DE',
-}
-export const scellooLight: any = {
-  base: '#F4F2FF',
-}
+export const scellooPrimary: any = '#6D5BD0'
+export const scellooGreen: any = '#007F00'
+export const scellooRed: any = '#D30000'
+export const scellooPurple: any = '#25213B'
+export const scellooBlue: any = '#4A4AFF'
+export const scellooDark: any = '#25213B'
+export const scellooDarkGrey: any = '#6E6893'
+export const scellooGrey: any = '#8B83BA'
+export const scellooGrey1: any = '#8E5E5E5'
+export const scellooGrey2: any = '#D9D5EC'
+export const scellooLightGrey: any = '#C6C2DE'
+export const scellooLight: any = '#F4F2FF'
+export const scellooLight2: any = '#E5E5E5'

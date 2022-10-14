@@ -1,40 +1,35 @@
 <template>
   <div class="data__table mb-4">
-    <div class="data__table-header mb-3">
-      <h3>Table Heading</h3>
-    </div>
+    <h3
+      class="header-title font-weight-bold mb-3 text-uppercase scellooDarkGrey--text text-subtitile-1"
+    >
+      Table Heading
+    </h3>
 
     <v-layout class="tab-layout pa-0 justify-space-between align-end">
       <div>
         <v-tabs background-color="transparent">
-          <v-tab @click="filterData('all')">
-            All
-          </v-tab>
-
-          <v-tab @click="filterData('paid')">
-            Paid
-          </v-tab>
-
-          <v-tab @click="filterData('unpaid')">
-            Unpaid
-          </v-tab>
-
-          <v-tab @click="filterData('overdue')">
-            Overdue
+          <v-tab
+            v-for="tab in tabs"
+            :key="tab.title"
+            class="text-capitalize pa-0 cellooDarkGrey--text font-weight-bold"
+            @click="filterData(tab.title)"
+          >
+            {{ tab.title }}
           </v-tab>
         </v-tabs>
       </div>
 
-      <div class="mb-1 d-inline-flex align-end">
-        <span class="font-weight-normal">
+      <div class="mb-1 d-flex align-end">
+        <span class="text-body-1 scellooGrey--text">
           Total payable amount:
         </span>
 
-        <span class="total-amount font-weight-bold mx-1">
-          {{ totalPayableAmount.toLocaleString() }}
+        <span class="text-h5 font-weight-bold scellooGrey--text mx-1">
+          {{ `$${totalPayableAmount.toLocaleString()}` }}
         </span>
 
-        <span class="font-weight-normal">
+        <span class="font-weight-thin text-h6 text-uppercase scellooGrey--text">
           USD
         </span>
       </div>
@@ -47,7 +42,14 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'LayoutHeader',
-  data: () => ({}),
+  data: () => ({
+    tabs: [
+      { title: 'all' },
+      { title: 'paid' },
+      { title: 'unpaid' },
+      { title: 'overdue' },
+    ],
+  }),
 
   computed: {
     totalPayableAmount() {
@@ -69,48 +71,16 @@ export default defineComponent({
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
-
-.v-tab {
-  text-transform: capitalize !important;
-  font-weight: bold;
-  font-size: 0.9rem !important;
-  color: #6e6893 !important;
-  padding: 0;
+.header-title {
+  letter-spacing: 0.1rem;
 }
 
-.data__table-header {
-  font-family: 'Inter';
-  font-weight: 800;
-  margin-bottom: 0.9rem;
-  font-style: normal;
-  font-size: 0.9rem;
-  letter-spacing: 1.6px;
-  text-transform: uppercase;
-  color: #6e6893;
-  line-height: 1rem;
-}
-.v-tab--active,
-.v-tabs-slider {
+.v-tab--active {
   color: #25213b !important;
-  padding: 0;
-  margin: 0;
   border-bottom: 3px solid #25213b;
 }
 
-.v-tabs-slider {
-  width: 90% !important;
-  display: flex;
-  align-items: center;
-  justify-items: center;
-}
-
 .tab-layout {
-  border-bottom: 2px solid #c6c2de !important;
-}
-
-.total-amount {
-  font-size: 1.2rem;
-  color: #6e6893;
+  border-bottom: 2px solid #c6c2de;
 }
 </style>
