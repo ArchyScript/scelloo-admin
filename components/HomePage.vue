@@ -38,7 +38,7 @@
                       :key="`${filterOption.title}_${index}`"
                       class="filter-section-label d-flex pa-1 mb-1 cursor-pointer items-center justify-space-between"
                     >
-                      <span>
+                      <span class="text-capitalize">
                         {{ filterOption.title }}
                       </span>
 
@@ -47,6 +47,13 @@
                         :value="filterOption.title"
                         dense
                       ></v-radio>
+
+                      <!-- Works as the above same  -->
+                      <!-- <v-radio
+                        @click="sortUsersData(filterOption.sortParam)"
+                        :value="filterOption.title"
+                        dense
+                      ></v-radio> -->
                     </label>
                   </v-radio-group>
                 </div>
@@ -293,19 +300,27 @@ export default {
     filterOptions1: [
       {
         title: 'Default',
+        sortParam: 'default',
         mutationCommitType: 'SORT_AND_UPDATE_BY_DEFAULT',
       },
       {
         title: 'First name',
+        sortParam: 'first_name',
         mutationCommitType: 'SORT_AND_UPDATE_BY_FIRST_NAME',
       },
       {
         title: 'Last name',
+        sortParam: 'last_name',
         mutationCommitType: 'SORT_AND_UPDATE_BY_LAST_NAME',
       },
-      { title: 'Due date', mutationCommitType: 'SORT_AND_UPDATE_BY_DUE_DATE' },
+      {
+        title: 'Due date',
+        sortParam: 'due_date',
+        mutationCommitType: 'SORT_AND_UPDATE_BY_DUE_DATE',
+      },
       {
         title: 'Last Login',
+        sortParam: 'last_login',
         mutationCommitType: 'SORT_AND_UPDATE_BY_LAST_LOGIN',
       },
     ],
@@ -389,6 +404,10 @@ export default {
 
       // dispatch action to filter data
       await this.$store.dispatch('filterUsers', filterQuery)
+    },
+
+    async sortUsersData(sortParam) {
+      return await this.$store.dispatch('sortUsersData', sortParam)
     },
 
     async getAllUsersData() {

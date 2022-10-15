@@ -34,6 +34,15 @@ export const actions = {
   },
 
   //
+  async sortUsersData({ commit }, param) {
+    if (param === 'default') return commit('SORT_AND_UPDATE_BY_DEFAULT')
+    if (param === 'first_name') return commit('SORT_AND_UPDATE_BY_FIRST_NAME')
+    if (param === 'last_name') return commit('SORT_AND_UPDATE_BY_LAST_NAME')
+    if (param === 'due_date') return commit('SORT_AND_UPDATE_BY_DUE_DATE')
+    if (param === 'last_login') return commit('SORT_AND_UPDATE_BY_LAST_LOGIN')
+  },
+
+  //
   async updateUserPaymentStatus({ commit }, params) {
     const { id, paymentStatus } = params
 
